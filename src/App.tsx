@@ -1,14 +1,21 @@
 import React from 'react'
-import { Button } from './ui/button'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Layout from '@/ui/components/Layout'
+import Home from '@/pages/Home'
+import Projects from '@/pages/Projects'
+import Hobbies from '@/pages/Hobbies'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center">
-      <div className="max-w-2xl p-8">
-        <h1 className="text-4xl font-bold mb-4">Hello — Portfolio</h1>
-        <p className="mb-6 text-slate-600">This is your scaffolded portfolio. Start editing <code>src/App.tsx</code>.</p>
-        <Button>Primary action</Button>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/hobbies" element={<Hobbies />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   )
 }
