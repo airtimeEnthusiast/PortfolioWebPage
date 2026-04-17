@@ -32,7 +32,7 @@ jobs:
           echo "REMOTE_TEX_URL=${{ secrets.REMOTE_TEX_URL }}" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: npm ci
+  run: npm install
 
       - name: Run fetch & upload
         env:
