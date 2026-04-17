@@ -5,8 +5,9 @@ import { Home, Briefcase, Star } from 'lucide-react'
 const links = [
   { to: '/about', label: 'About', icon: <Home className="w-5 h-5" /> },
   { to: '/projects', label: 'Projects', icon: <Briefcase className="w-5 h-5" /> },
-  { to: '/hobbies', label: 'Hobbies', icon: <Star className="w-5 h-5" /> }
+  //{ to: '/hobbies', label: 'Hobbies', icon: <Star className="w-5 h-5" /> }
 ]
+
 
 export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) {
   return (
