@@ -4,6 +4,9 @@ This workflow fetches your LaTeX resume from a remote repo and uploads it to Fir
 
 Secrets required (Repository → Settings → Secrets and variables → Actions):
 - `FIREBASE_SA` — the entire service account JSON file contents (value = JSON).
+- `FIREBASE_PROJECT_ID` — your Firebase project id (e.g. `portfolio-data-55c5e`).
+- `REMOTE_TEX_URL` — raw URL to the LaTeX file (e.g. `https://raw.githubusercontent.com/airtimeEnthusiast/Resume-Master/main/ATSAdmin/Austin_B_Wright_Resume.tex`).
+- `REMOTE_GITHUB_TOKEN` — (optional) a personal access token with `repo` scope to fetch files from private repositories. If your resume is in a private repo, add this secret so the workflow can access it.
 
 Local run (recommended for testing)
 

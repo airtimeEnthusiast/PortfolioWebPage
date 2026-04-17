@@ -33,3 +33,9 @@ coverage/
 # Firebase service account (do not commit)
 serviceAccount.json
 *.serviceAccount.json
+
+# Local workflow test helpers
+.github/workflows/tests/
+
+# Local admin files
+scripts/local_resume.json

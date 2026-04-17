@@ -29,7 +29,6 @@ jobs:
       - name: Set env
         run: |
           echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "REMOTE_TEX_URL=${{ secrets.REMOTE_TEX_URL }}" >> $GITHUB_ENV
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -39,12 +38,15 @@ jobs:
       - name: Install dependencies
   run: npm install
 
-      - name: Run fetch & upload
+      - name: Run resume uploader (remote or local)
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/serviceAccount.json
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          REMOTE_TEX_URL: ${{ secrets.REMOTE_TEX_URL }}
-        run: npm run fetch:tex
+          REMOTE_GITHUB_TOKEN: ${{ secrets.REMOTE_GITHUB_TOKEN }}
+          REMOTE_TEX_REPO: ${{ secrets.REMOTE_TEX_REPO }}
+          REMOTE_TEX_PATH: ${{ secrets.REMOTE_TEX_PATH }}
+          REMOTE_TEX_BRANCH: ${{ secrets.REMOTE_TEX_BRANCH }}
+        run: npm run upload:local
 
       - name: Cleanup
         if: always()
