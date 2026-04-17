@@ -4,9 +4,9 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Base path for GitHub Pages (repo is "PortfolioWebPage").
+  // Base path for GitHub Pages (will serve under /Portfolio/).
   // If you rename the repo or deploy to a user/organization site, update this value accordingly.
-  base: '/PortfolioWebPage/',
+  base: '/Portfolio/',
   plugins: [react()],
   resolve: {
     alias: {
