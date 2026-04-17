@@ -3,15 +3,20 @@ import { NavLink } from 'react-router-dom'
 import { Home, Briefcase, Star } from 'lucide-react'
 
 const links = [
-  { to: '/home', label: 'Home', icon: <Home className="w-5 h-5" /> },
+  { to: '/about', label: 'About', icon: <Home className="w-5 h-5" /> },
   { to: '/projects', label: 'Projects', icon: <Briefcase className="w-5 h-5" /> },
   { to: '/hobbies', label: 'Hobbies', icon: <Star className="w-5 h-5" /> }
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) {
   return (
-    <aside className="hidden md:flex md:flex-col md:w-64 bg-slate-50 border-r border-slate-200 p-4">
-      <div className="mb-6 text-xl font-semibold">Your Name</div>
+    // Sidebar: visible on md+. When `collapsed` is true, show icons only (narrow).
+    <aside
+      className={`hidden md:flex md:flex-col bg-slate-50 border-r border-slate-200 p-4 transition-all duration-150 ${
+        collapsed ? 'md:w-20' : 'md:w-64'
+      }`}
+    >
+      <div className={`mb-6 font-semibold ${collapsed ? 'text-sm' : 'text-xl'}`}>Your Name</div>
       <nav className="flex-1">
         {links.map((l) => (
           <NavLink
@@ -22,11 +27,11 @@ export default function Sidebar() {
             }
           >
             {l.icon}
-            <span>{l.label}</span>
+            {!collapsed && <span>{l.label}</span>}
           </NavLink>
         ))}
       </nav>
-      <div className="mt-6 text-xs text-slate-500">© {new Date().getFullYear()}</div>
+      <div className={`mt-6 text-xs text-slate-500 ${collapsed ? 'hidden' : ''}`}>© {new Date().getFullYear()}</div>
     </aside>
   )
 }

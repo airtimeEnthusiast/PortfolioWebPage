@@ -5,7 +5,8 @@ This workflow fetches your LaTeX resume from a remote repo and uploads it to Fir
 Secrets required (Repository → Settings → Secrets and variables → Actions):
 - `FIREBASE_SA` — the entire service account JSON file contents (value = JSON).
 - `FIREBASE_PROJECT_ID` — your Firebase project id (e.g. `portfolio-data-55c5e`).
-- `REMOTE_TEX_URL` — raw URL to the LaTeX file (e.g. `https://raw.githubusercontent.com/airtimeEnthusiast/Resume-Master/main/ATSAdmin/Austin_B_Wright_Resume.tex`).
+ - `REMOTE_TEX_REPO` — repository containing the resume JSON (e.g. `airtimeEnthusiast/Resume-Master`).
+ - `REMOTE_TEX_PATH` — path to the resume JSON inside the repo (e.g. `ATSFriendly/resume.json`).
 - `REMOTE_GITHUB_TOKEN` — (optional) a personal access token with `repo` scope to fetch files from private repositories. If your resume is in a private repo, add this secret so the workflow can access it.
 
 Local run (recommended for testing)
@@ -17,19 +18,20 @@ Local run (recommended for testing)
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/portfolio/serviceAccount.json"
 export FIREBASE_PROJECT_ID="your-firebase-project-id"
-export REMOTE_TEX_URL="https://raw.githubusercontent.com/airtimeEnthusiast/Resume-Master/main/ATSAdmin/Austin_B_Wright_Resume.tex"
+export REMOTE_TEX_REPO="airtimeEnthusiast/Resume-Master"
+export REMOTE_TEX_PATH="ATSFriendly/resume.json"
 npm install
-npm run fetch:tex
+node scripts/uploadLocalResume.js
 ```
 
 CI / GitHub (set secrets)
-
 Use the GitHub UI (Settings → Secrets and variables → Actions) to add the three secrets above. Or use the `gh` CLI:
 
 ```bash
 gh secret set FIREBASE_SA --body "$(cat serviceAccount.json)"
 gh secret set FIREBASE_PROJECT_ID --body "your-firebase-project-id"
-gh secret set REMOTE_TEX_URL --body "https://raw.githubusercontent.com/airtimeEnthusiast/Resume-Master/main/ATSAdmin/Austin_B_Wright_Resume.tex"
+gh secret set REMOTE_TEX_REPO --body "airtimeEnthusiast/Resume-Master"
+gh secret set REMOTE_TEX_PATH --body "ATSFriendly/resume.json"
 ```
 
 Run the workflow manually from GitHub: Actions → Publish Resume from Remote → Run workflow.

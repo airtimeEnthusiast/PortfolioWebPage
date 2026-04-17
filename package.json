@@ -19,6 +19,7 @@
     "clsx": "^1.2.1",
     "firebase-admin": "^13.8.0",
     "lucide-react": "^0.264.0",
+  "firebase": "^10.9.0",
     "radix-ui": "^1.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
