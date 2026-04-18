@@ -207,8 +207,8 @@ function parseLocation(location: unknown): string {
 
 function normalizeRole(raw: RecordLike, experience: NormalizedExperience[]): string {
   const basics = asRecord(raw.basics)
-  if (firstNonEmpty(raw.role, raw.title, basics.label)) {
-    return firstNonEmpty(raw.role, raw.title, basics.label)
+  if (firstNonEmpty(raw.role, raw.Role, raw.title, basics.label)) {
+    return firstNonEmpty(raw.role, raw.Role, raw.title, basics.label)
   }
 
   if (experience.length > 0) {
@@ -344,7 +344,8 @@ const About: React.FC = () => {
   const topExperience = profile.experience.slice(0, 3)
 
   return (
-    <div className="max-w-6xl space-y-8">
+    <div className="relative max-w-6xl space-y-8">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(232,121,249,0.12),transparent_30%),radial-gradient(circle_at_top_right,rgba(103,232,249,0.1),transparent_28%)]" />
       <section className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 p-8 text-slate-100">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-fuchsia-400 via-purple-400 to-cyan-300" />
         <div className="pointer-events-none absolute inset-x-6 bottom-3 h-px bg-gradient-to-r from-transparent via-fuchsia-300/40 to-cyan-300/40" />
@@ -352,7 +353,6 @@ const About: React.FC = () => {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-wider text-cyan-300">About</p>
-            <h1 className="mt-2 text-3xl font-bold md:text-4xl">{profile.name || 'Profile'}</h1>
             {profile.role ? <p className="mt-2 text-lg text-slate-300">{profile.role}</p> : null}
             {profile.location ? (
               <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-300">

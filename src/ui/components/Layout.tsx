@@ -13,11 +13,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }, [])
 
   return (
-    <div className="min-h-screen flex bg-white text-slate-900">
+    <div className="min-h-screen flex bg-slate-950 text-slate-100">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((s) => !s)} />
       <div className="flex-1 flex flex-col">
         <TopNav />
-        <main className="p-6">{children}</main>
+        <main className="min-h-[calc(100vh-65px)] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
+          {children}
+        </main>
       </div>
     </div>
   )
