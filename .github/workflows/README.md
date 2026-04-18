@@ -1,45 +1,39 @@
 # Resume publish workflow — quick notes
 
-This workflow fetches your LaTeX resume from a remote repo and uploads it to Firebase Storage, then updates `resume/profile` in Firestore.
+This workflow fetches the `resume.json` from a remote GitHub repo and updates `resume/profile` in Firestore.
 
 Secrets required (Repository → Settings → Secrets and variables → Actions):
 - `FIREBASE_SA` — the entire service account JSON file contents (value = JSON).
-- `FIREBASE_PROJECT_ID` — your Firebase project id (e.g. `portfolio-data-55c5e`).
- - `REMOTE_TEX_REPO` — repository containing the resume JSON (e.g. `airtimeEnthusiast/Resume-Master`).
- - `REMOTE_TEX_PATH` — path to the resume JSON inside the repo (e.g. `ATSFriendly/resume.json`).
-- `REMOTE_GITHUB_TOKEN` — (optional) a personal access token with `repo` scope to fetch files from private repositories. If your resume is in a private repo, add this secret so the workflow can access it.
+- `FIREBASE_PROJECT_ID` — your Firebase project id.
+- `REMOTE_TEX_REPO` — repository containing the resume JSON (example: `airtimeEnthusiast/Resume-Master`).
+- `REMOTE_TEX_PATH` — path to the resume JSON inside the repo (example: `ATSFriendly/resume.json`).
+- `REMOTE_TEX_BRANCH` — branch to fetch from (example: `main`).
+- `REMOTE_GITHUB_TOKEN` — personal access token with `repo` scope if `Resume-Master` is private.
 
-Local run (recommended for testing)
+Local run
 
-1. Place the downloaded service account JSON from Firebase somewhere safe (example `~/.config/portfolio/serviceAccount.json`).
+1. Place the Firebase service account JSON somewhere safe, for example `~/.config/portfolio/serviceAccount.json`.
 2. Lock permissions: `chmod 600 ~/.config/portfolio/serviceAccount.json`.
-3. In your shell:
+3. In your shell run:
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/portfolio/serviceAccount.json"
 export FIREBASE_PROJECT_ID="your-firebase-project-id"
 export REMOTE_TEX_REPO="airtimeEnthusiast/Resume-Master"
 export REMOTE_TEX_PATH="ATSFriendly/resume.json"
-npm install
-node scripts/uploadLocalResume.js
+export REMOTE_TEX_BRANCH="main"
+export REMOTE_GITHUB_TOKEN="your_github_pat"   # required if Resume-Master is private
+
+npm run upload:local
 ```
 
-CI / GitHub (set secrets)
-Use the GitHub UI (Settings → Secrets and variables → Actions) to add the three secrets above. Or use the `gh` CLI:
+This script is remote-only. It no longer falls back to `scripts/local_resume.json`.
 
-```bash
-gh secret set FIREBASE_SA --body "$(cat serviceAccount.json)"
-gh secret set FIREBASE_PROJECT_ID --body "your-firebase-project-id"
-gh secret set REMOTE_TEX_REPO --body "airtimeEnthusiast/Resume-Master"
-gh secret set REMOTE_TEX_PATH --body "ATSFriendly/resume.json"
-```
+CI / GitHub
 
-Run the workflow manually from GitHub: Actions → Publish Resume from Remote → Run workflow.
+Add the same values as GitHub Actions secrets, then run the workflow manually from GitHub:
+Actions → Publish Resume from Remote → Run workflow.
 
 Notes
-- The workflow writes the `FIREBASE_SA` secret to a temporary `serviceAccount.json` on the runner. It is removed after the job.
-- Never commit service account JSON to the repository. This repo already ignores `serviceAccount.json`.
-- If you want stronger security, I can help configure Workload Identity Federation (OIDC) so no JSON secret is needed.
-
-Lockfile note
-- For reproducible installs in CI, consider committing your package-lock.json (run `npm install` locally and commit the generated lockfile). The workflow uses `npm install` when a lockfile is missing.
+- The workflow writes the `FIREBASE_SA` secret to a temporary `serviceAccount.json` on the runner and removes it after the job.
+- Never commit service account JSON to the repository.

@@ -33,6 +33,17 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || 'YOUR_APP_ID'
 }
 
+function hasInvalidFirebaseConfig(config: Record<string, string>) {
+  return Object.values(config).some((value) => !value || value.startsWith('YOUR_'))
+}
+
+function assertFirebaseConfig() {
+  if (!hasInvalidFirebaseConfig(firebaseConfig as Record<string, string>)) return
+  throw new Error(
+    'Firebase config is missing. Set VITE_FIREBASE_* env vars for local and production builds.'
+  )
+}
+
 let app: FirebaseApp
 if (!getApps().length) {
   app = initializeApp(firebaseConfig)
@@ -47,9 +58,24 @@ export const db: Firestore = getFirestore(app)
  * Returns `null` if not found.
  */
 export async function fetchResume(): Promise<Resume | null> {
+  assertFirebaseConfig()
   const ref = doc(db, 'resume', 'profile')
   const snap = await getDoc(ref)
   return snap.exists() ? (snap.data() as Resume) : null
+}
+
+/**
+ * Fetch and unwrap the profile payload at `resume/profile`.
+ * Supports both `{ data: <resume> }` and direct resume documents.
+ */
+export async function fetchResumeProfile(): Promise<Record<string, any> | null> {
+  assertFirebaseConfig()
+  const ref = doc(db, 'resume', 'profile')
+  const snap = await getDoc(ref)
+  if (!snap.exists()) return null
+
+  const payload = snap.data() as Record<string, any>
+  return (payload?.data ?? payload) as Record<string, any>
 }
 
 export default { app: app, db }
