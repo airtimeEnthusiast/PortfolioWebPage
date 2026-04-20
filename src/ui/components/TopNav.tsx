@@ -4,7 +4,7 @@ import site from '@/config/site'
 
 export default function TopNav({ onToggle }: { onToggle?: () => void }) {
   return (
-    <header className="sticky top-0 z-10 flex w-full items-center justify-between gap-3 border-b border-slate-800 bg-slate-900/85 px-4 py-3 backdrop-blur">
+    <header className="sticky top-0 z-20 flex w-full items-center justify-between gap-3 border-b border-slate-800 bg-slate-900/90 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur md:pt-3">
       <div className="flex items-center gap-3">
         <div className="hidden text-lg font-semibold text-slate-100 md:block">{site.name}</div>
       </div>
