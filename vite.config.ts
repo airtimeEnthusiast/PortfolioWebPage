@@ -5,9 +5,9 @@ import path from 'path'
 // https://vitejs.dev/config/
 
 export default defineConfig({
-  // Base path for GitHub Pages (match the repository name).
-  // If you rename the repo or deploy to a user/organization site, update this value accordingly.
-  base: '/PortfolioWebPage/',
+  // Base path for deployment. With custom domain at austinbradlywright.com, use '/'.
+  // For GitHub Pages project path, use '/PortfolioWebPage/'.
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
