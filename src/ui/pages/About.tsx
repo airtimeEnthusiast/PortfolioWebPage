@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Bike, Briefcase, Code2, GraduationCap, MapPin, Mountain } from 'lucide-react'
+import { Briefcase, Code2, GraduationCap, MapPin } from 'lucide-react'
 import { fetchResumeProfile } from '@/firebase/client'
 
 type RecordLike = Record<string, any>
@@ -471,29 +471,6 @@ const About: React.FC = () => {
           </div>
         </article>
 
-        <article className="rounded-2xl border border-slate-800 bg-slate-950 p-6">
-          <div className="mb-4 flex items-center gap-2 text-cyan-300">
-            <Bike className="h-4 w-4" />
-            <h2 className="text-lg font-semibold text-slate-100">Beyond Coding</h2>
-          </div>
-
-          <div className="space-y-2 text-sm text-slate-300">
-            {profile.hobbies.length > 0 ? (
-              profile.hobbies.map((hobby) => (
-                <div key={hobby} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/40 px-3 py-2">
-                  {hobby.toLowerCase().includes('mountain') ? (
-                    <Mountain className="h-4 w-4 text-cyan-300" />
-                  ) : (
-                    <Bike className="h-4 w-4 text-fuchsia-300" />
-                  )}
-                  <span>{hobby}</span>
-                </div>
-              ))
-            ) : (
-              <p className="text-slate-400">Add `hobbies` (or `interests`) in `resume/profile` to populate this section.</p>
-            )}
-          </div>
-        </article>
       </section>
     </div>
   )

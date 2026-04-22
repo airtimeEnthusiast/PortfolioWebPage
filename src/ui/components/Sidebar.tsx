@@ -6,7 +6,7 @@ import site from '@/config/site'
 const links = [
   { to: '/', label: 'About', icon: <Home className="w-5 h-5" /> },
   { to: '/projects', label: 'Projects', icon: <Briefcase className="w-5 h-5" /> },
-  //{ to: '/hobbies', label: 'Hobbies', icon: <Star className="w-5 h-5" /> }
+  { to: '/hobbies', label: 'Hobbies', icon: <Star className="w-5 h-5" /> },
 ]
 
 export default function Sidebar({ collapsed = false, onToggle }: { collapsed?: boolean; onToggle?: () => void }) {
